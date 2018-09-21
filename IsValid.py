@@ -9,7 +9,7 @@ def isValidSudoku(board):
         if not isValidGroup(getSubBox(board,i)): return False
     return True
 
-
+#checks if a 1d array is a valid group (no repeating elements but '.')
 def isValidGroup(group):
     elements = []
     for x in group:
@@ -17,14 +17,13 @@ def isValidGroup(group):
         if (x != '.'): elements.append(x)
     return True 
 
+
+## functions to return columns and subBoxes as 1d arrays
 def getCol(board, colIndex):
     column = []
     for rowIndex in xrange(9):
         column.append(board[rowIndex][colIndex])
     return column
-
-def getSubBoxI(rowI,colI):
-    return (colI/3)*3 + rowI/3
 
 def getSubBox(board, subBoxIndex):
     subBox = []

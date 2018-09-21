@@ -1,7 +1,6 @@
 from copy import deepcopy
-import IO
 import IsValid
-
+import IO
 nums = map(str,range(1,10))
 #for each empty cell we maintain a list of possible values
 def getState(board):
@@ -17,7 +16,7 @@ def getState(board):
 
 def isSolved(state):
     for row in state:
-        for cell in state:
+        for cell in row:
             if cell not in nums:
                 return False
     return True
@@ -96,12 +95,11 @@ def solve(state):
             if isinstance(cell, set):
                 for value in cell:
                     newState = deepcopy(state)
-                    newState[row][cell] = value
+                    newState[row][col] = value
                     solved = solve(new_state)
                     if solved is not None:
                         return solved
                 return None
-
 
 emptyBoard = [['.']*9]*9
 badBoard = [nums*9]*9
@@ -128,7 +126,7 @@ assert propagateStep(getState(board1))[0] == False
 assert propagateStep(getState(badBoard))[0] == True
 assert propagateStep(getState(board1))[1] == True
 assert propagateStep(getState(emptyBoard))[1] == False
-solve(state1)
+print solve(state1)
 assert IsValid.isValidSudoku(state1)
-print IO.makeBoard(state1)
+
 print "passed all tests"

@@ -17,6 +17,14 @@ def readBoard():
     f.close()
     return getBoard(formBoard)
 
+def writeSolution(init, sol):
+    toWrite = "Solution \n" + makeBoard(init) + "\n"
+    toWrite += "\n"+"           ^" + "\n" +"         / | \ "+ "\n"+ "           |" + "\n" +"           |"
+    toWrite += "\n\n"+ makeBoard(sol)
+    f = open('board.txt','w')
+    f.write(toWrite)
+    f.close()
+
 def makeBoard(board=emptyBoard):
     formBoard = ''
     for i in xrange(9):
