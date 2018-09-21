@@ -1,5 +1,5 @@
 def isValidSudoku(board):
-
+    
     for i in range(9):
         #check rows
         if not isValidGroup(board[i]): return False
