@@ -1,7 +1,7 @@
 ##we require that the user call makeBoard, then replace the blank characters with
 ##the numbers given on their board
 
-divider = "---------+---------+---------"
+divider = "-------+-------+-------"
 emptyBoard = [['.']*9]*9
 legal = [str(x) for x in range(1,10)]  + ['.']
 
@@ -22,7 +22,7 @@ def makeBoard(board=emptyBoard):
     for i in xrange(9):
         formBoard += makeRow(board[i])
         if i == 2 or i ==5:
-            formBoard+= '\n' + makeRow(divider)
+            formBoard+= '\n' + divider
 
         if i != 8:                          #don't add new line to last row
             formBoard += '\n'
@@ -32,7 +32,10 @@ def makeBoard(board=emptyBoard):
 def makeRow(row):
     formRow = ''
     for i in xrange(9):
-        formRow += ' ' +row[i]
+        if isinstance(row[i],set):
+            formRow += ' ' + '.'
+        else:
+            formRow += ' ' +row[i]
         if i == 2 or i ==5:
             formRow += ' |'
     return formRow
@@ -99,5 +102,5 @@ def test():
     assert not isWellFormatted(board3)
     assert not isWellFormatted(board4)
     assert isWellFormatted(emptyBoard)
-
+    print makeBoard(board1)
     print "tests pass"
