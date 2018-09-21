@@ -2,7 +2,20 @@
 ##the numbers given on their board
 
 divider = "---------+---------+---------"
-emptyBoard = [["."]*9]*9
+emptyBoard = [['.']*9]*9
+legal = [str(x) for x in range(1,10)]  + ['.']
+
+
+def initBoard():
+    f = open('board.txt','w')
+    f.write(makeBoard())
+    f.close()
+
+def readBoard():
+    f = open('board.txt','r')
+    formBoard = f.read()
+    f.close()
+    return getBoard(formBoard)
 
 def makeBoard(board=emptyBoard):
     formBoard = ''
@@ -25,44 +38,66 @@ def makeRow(row):
     return formRow
 
 def getBoard(formBoard):
-    board = []
-    rowsToRead = [0,1,2,4,5,6,8,9,10]  ##skip divider lines 
+    board = [] 
     rows = formBoard.splitlines()
-    for i in rowsToRead:
-        board += [getRow(rows[i])]
+    for i in rows:
+        if getRow(i) != []:            #skip divider rows
+            board += [getRow(i)]
     return board
 
 def getRow(formRow):
-    legal = [str(x) for x in range(1,10)]  + ['.']
     return [s for s in formRow if s in legal]
-        
-board1 = [
-  ["5","3",".",".","7",".",".",".","."],
-  ["6",".",".","1","9","5",".",".","."],
-  [".","9","8",".",".",".",".","6","."],
-  ["8",".",".",".","6",".",".",".","3"],
-  ["4",".",".","8",".","3",".",".","1"],
-  ["7",".",".",".","2",".",".",".","6"],
-  [".","6",".",".",".",".","2","8","."],
-  [".",".",".","4","1","9",".",".","5"],
-  [".",".",".",".","8",".",".","7","9"]
-]
-board2 = [
-  ["8","3",".",".","7",".",".",".","."],
-  ["6",".",".","1","9","5",".",".","."],
-  [".","9","8",".",".",".",".","6","."],
-  ["8",".",".",".","6",".",".",".","3"],
-  ["4",".",".","8",".","3",".",".","1"],
-  ["7",".",".",".","2",".",".",".","6"],
-  [".","6",".",".",".",".","2","8","."],
-  [".",".",".","4","1","9",".",".","5"],
-  [".",".",".",".","8",".",".","7","9"]
-]
-assert makeRow(["5","3",".",".","7",".",".",".","."]) == " 5 3 . | . 7 . | . . ."
 
-assert getRow(" 8 3 . | . 7 . | . . .") == board2[0]
-assert board1 == getBoard(makeBoard(board1))
+def isWellFormatted(board):
+    if len(board) != 9:
+        return False
+    for i in board:
+        if len(i) != 9:
+            return False
+        for x in i:
+            if x not in legal:
+                return False
+    return True
 
-assert board2 == getBoard(makeBoard(board2))
+def test():        
+    board1 = [
+      ["5","3",".",".","7",".",".",".","."],
+      ["6",".",".","1","9","5",".",".","."],
+      [".","9","8",".",".",".",".","6","."],
+      ["8",".",".",".","6",".",".",".","3"],
+      ["4",".",".","8",".","3",".",".","1"],
+      ["7",".",".",".","2",".",".",".","6"],
+      [".","6",".",".",".",".","2","8","."],
+      [".",".",".","4","1","9",".",".","5"],
+      [".",".",".",".","8",".",".","7","9"]
+    ]
+    board2 = [
+      ["8","3",".",".","7",".",".",".","."],
+      ["6",".",".","1","9","5",".",".","."],
+      [".","9","8",".",".",".",".","6","."],
+      ["8",".",".",".","6",".",".",".","3"],
+      ["4",".",".","8",".","3",".",".","1"],
+      ["7",".",".",".","2",".",".",".","6"],
+      [".","6",".",".",".",".","2","8","."],
+      [".",".",".","4","1","9",".",".","5"],
+      [".",".",".",".","8",".",".","7","9"]
+    ]
+    
+    assert makeRow(["5","3",".",".","7",".",".",".","."]) == " 5 3 . | . 7 . | . . ."
 
-print "tests pass"
+    assert getRow(" 8 3 . | . 7 . | . . .") == board2[0]
+    assert board1 == getBoard(makeBoard(board1))
+    assert board2 == getBoard(makeBoard(board2))
+    assert emptyBoard == getBoard(makeBoard())
+    assert isWellFormatted(board1)
+    assert isWellFormatted(board2)
+    assert not isWellFormatted(board1[:8])
+    board3 = board2
+    board3[1] = ["."]
+    board4 = board1
+    board4[8] = ['0']*9
+    assert not isWellFormatted(board3)
+    assert not isWellFormatted(board4)
+    assert isWellFormatted(emptyBoard)
+
+    print "tests pass"
