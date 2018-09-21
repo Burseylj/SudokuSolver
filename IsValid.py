@@ -7,7 +7,8 @@ def isValidSudoku(board):
         if not isValidGroup(getCol(board,i)): return False           
         #check sub boxes
         if not isValidGroup(getSubBox(board,i)): return False
-    return True 
+    return True
+
 
 def isValidGroup(group):
     elements = []
@@ -18,9 +19,12 @@ def isValidGroup(group):
 
 def getCol(board, colIndex):
     column = []
-    for rowIndex in range(9):
+    for rowIndex in xrange(9):
         column.append(board[rowIndex][colIndex])
     return column
+
+def getSubBoxI(rowI,colI):
+    return (colI/3)*3 + rowI/3
 
 def getSubBox(board, subBoxIndex):
     subBox = []
@@ -31,6 +35,7 @@ def getSubBox(board, subBoxIndex):
             subBox.append(board[i][j])
     return subBox
 
+                       
 def test():
     board1 = [
       ["5","3",".",".","7",".",".",".","."],
@@ -54,5 +59,7 @@ def test():
       [".",".",".","4","1","9",".",".","5"],
       [".",".",".",".","8",".",".","7","9"]
     ]
-    print "board1 is {} and should be {}".format(isValidSudoku(board1), True)
-    print "board2 is {} and should be {}".format(isValidSudoku(board2), False)
+    assert (isValidSudoku(board1)== True)
+    assert (isValidSudoku(board2) == False)
+    print "tests pass"
+
