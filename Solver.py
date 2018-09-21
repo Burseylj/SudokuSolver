@@ -100,33 +100,33 @@ def solve(state):
                     if solved is not None:
                         return solved
                 return None
+def test();
+    emptyBoard = [['.']*9]*9
+    badBoard = [nums*9]*9
+    badBoard[0][1] = '.'
+    board1 = [
+      ["5","3",".",".","7",".",".",".","."],
+      ["6",".",".","1","9","5",".",".","."],
+      [".","9","8",".",".",".",".","6","."],
+      ["8",".",".",".","6",".",".",".","3"],
+      ["4",".",".","8",".","3",".",".","1"],
+      ["7",".",".",".","2",".",".",".","6"],
+      [".","6",".",".",".",".","2","8","."],
+      [".",".",".","4","1","9",".",".","5"],
+      [".",".",".",".","8",".",".","7","9"]
+    ]
+    state1 = getState(board1)
+    propagateStep(state1)
+    assert [x for x in getState(board1)[8] if x in nums] == ['8', '7', '9']
+    assert [x for x in IsValid.getCol(getState(board1),0) if x in nums] == ['5', '6', '8', '4', '7']
+    assert [x for x in IsValid.getSubBox(getState(board1),4) if x in nums] == ['6', '8', '3', '2']
+    assert state1[4][4] == '5'
+    assert state1[6][5] == '7'
+    assert propagateStep(getState(board1))[0] == False
+    assert propagateStep(getState(badBoard))[0] == True
+    assert propagateStep(getState(board1))[1] == True
+    assert propagateStep(getState(emptyBoard))[1] == False
 
-emptyBoard = [['.']*9]*9
-badBoard = [nums*9]*9
-badBoard[0][1] = '.'
-board1 = [
-  ["5","3",".",".","7",".",".",".","."],
-  ["6",".",".","1","9","5",".",".","."],
-  [".","9","8",".",".",".",".","6","."],
-  ["8",".",".",".","6",".",".",".","3"],
-  ["4",".",".","8",".","3",".",".","1"],
-  ["7",".",".",".","2",".",".",".","6"],
-  [".","6",".",".",".",".","2","8","."],
-  [".",".",".","4","1","9",".",".","5"],
-  [".",".",".",".","8",".",".","7","9"]
-]
-state1 = getState(board1)
-propagateStep(state1)
-assert [x for x in getState(board1)[8] if x in nums] == ['8', '7', '9']
-assert [x for x in IsValid.getCol(getState(board1),0) if x in nums] == ['5', '6', '8', '4', '7']
-assert [x for x in IsValid.getSubBox(getState(board1),4) if x in nums] == ['6', '8', '3', '2']
-assert state1[4][4] == '5'
-assert state1[6][5] == '7'
-assert propagateStep(getState(board1))[0] == False
-assert propagateStep(getState(badBoard))[0] == True
-assert propagateStep(getState(board1))[1] == True
-assert propagateStep(getState(emptyBoard))[1] == False
-print solve(state1)
-assert IsValid.isValidSudoku(state1)
+    assert IsValid.isValidSudoku(state1)
 
 print "passed all tests"
